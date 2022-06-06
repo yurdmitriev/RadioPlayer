@@ -6,9 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.yurdm.radioplayer.model.Radio
 import com.yurdm.radioplayer.repository.Repository
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class HomeViewModel(private val repository: Repository) : ViewModel() {
-    val res: MutableLiveData<List<Radio>> = MutableLiveData()
+    val res: MutableLiveData<Response<List<Radio>>> = MutableLiveData()
 
     fun listRadios() {
         viewModelScope.launch {

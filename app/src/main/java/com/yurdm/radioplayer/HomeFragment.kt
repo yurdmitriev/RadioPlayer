@@ -31,7 +31,11 @@ class HomeFragment : Fragment() {
 
         viewModel.listRadios()
         viewModel.res.observe(viewLifecycleOwner) { response ->
-            Log.d("Response", response[0].toString())
+            if (response.isSuccessful) {
+                response.body()?.let { Log.d("Response", it[0].toString()) }
+            } else {
+                Log.d("Response", response.errorBody().toString())
+            }
         }
 
         return view
