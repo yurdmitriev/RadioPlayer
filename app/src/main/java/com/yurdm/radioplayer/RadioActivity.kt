@@ -3,9 +3,7 @@ package com.yurdm.radioplayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
-import com.github.kittinunf.fuel.Fuel
 import com.yurdm.radioplayer.databinding.ActivityRadioBinding
-import kotlin.reflect.typeOf
 
 class RadioActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
