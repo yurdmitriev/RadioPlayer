@@ -1,14 +1,13 @@
 package com.yurdm.radioplayer
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yurdm.radioplayer.databinding.FragmentHomeBinding
 import com.yurdm.radioplayer.repository.Repository
 import com.yurdm.radioplayer.viewmodel.HomeViewModel
@@ -17,7 +16,7 @@ import com.yurdm.radioplayer.viewmodel.HomeViewModelFactory
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: HomeViewModel
-    private lateinit var adapter: RadioRecyclerAdapter
+    private lateinit var categoryAdapter: CategoryRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +25,7 @@ class HomeFragment : Fragment() {
         val factory = HomeViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
 
-        adapter = RadioRecyclerAdapter(layoutInflater) {}
+        categoryAdapter = CategoryRecyclerAdapter(layoutInflater)
     }
 
     override fun onCreateView(
@@ -37,13 +36,13 @@ class HomeFragment : Fragment() {
 //        val view = inflater.inflate(R.layout.fragment_home, container, false)
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        binding.radioList.adapter = adapter
-        binding.radioList.layoutManager = GridLayoutManager(context, 2)
+        binding.categoriesList.adapter = categoryAdapter
+        binding.categoriesList.layoutManager = LinearLayoutManager(context)
 
-        viewModel.listRadios()
-        viewModel.res.observe(viewLifecycleOwner) { response ->
+        viewModel.listCategories()
+        viewModel.categoryList.observe(viewLifecycleOwner) { response ->
             if (response.isSuccessful) {
-                response.body()?.let { adapter.submitList(it) }
+                response.body()?.let { categoryAdapter.submitList(it) }
             } else {
                 Toast.makeText(context, "Failed!", Toast.LENGTH_LONG).show()
             }
