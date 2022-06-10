@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         lateinit var gso: GoogleSignInOptions
         lateinit var signInIntent: Intent
+        var token: String? = null
         var account: GoogleSignInAccount? = null
         const val RC_SIGN_IN = 1
     }
