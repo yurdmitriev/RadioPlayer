@@ -74,15 +74,6 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        viewModel.getUserInfo()
-        viewModel.res.observe(viewLifecycleOwner) {
-            if (it.isSuccessful) {
-                println(it.raw())
-            } else {
-                println(it.code())
-            }
-        }
-
         updateUI()
 
         return binding.root
