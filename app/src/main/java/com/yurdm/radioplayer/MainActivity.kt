@@ -1,14 +1,13 @@
 package com.yurdm.radioplayer
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.yurdm.radioplayer.databinding.ActivityMainBinding
 
@@ -24,20 +23,21 @@ class MainActivity : AppCompatActivity() {
 
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.server_client_id))
+            .requestServerAuthCode(getString(R.string.server_client_id))
             .requestEmail()
             .build()
 
-        val signInClient = GoogleSignIn.getClient(this, gso)
-        signInIntent = signInClient.signInIntent
-
         account = GoogleSignIn.getLastSignedInAccount(this);
+
+        if (account != null) {
+            token = this.getSharedPreferences("credentials", Context.MODE_PRIVATE)
+                .getString("token", null)
+        }
     }
 
     companion object {
         lateinit var gso: GoogleSignInOptions
-        lateinit var signInIntent: Intent
         var token: String? = null
         var account: GoogleSignInAccount? = null
-        const val RC_SIGN_IN = 1
     }
 }
