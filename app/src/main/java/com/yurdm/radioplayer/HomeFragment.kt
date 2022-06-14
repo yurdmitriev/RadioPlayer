@@ -33,7 +33,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-//        val view = inflater.inflate(R.layout.fragment_home, container, false)
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         binding.categoriesList.adapter = categoryAdapter
@@ -46,6 +45,11 @@ class HomeFragment : Fragment() {
             } else {
                 Toast.makeText(context, "Failed!", Toast.LENGTH_LONG).show()
             }
+        }
+
+        binding.swipeContainer.setOnRefreshListener {
+            viewModel.listCategories()
+            binding.swipeContainer.isRefreshing = false
         }
 
         return binding.root
