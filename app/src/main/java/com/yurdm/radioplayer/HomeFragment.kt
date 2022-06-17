@@ -39,17 +39,20 @@ class HomeFragment : Fragment() {
         binding.categoriesList.layoutManager = LinearLayoutManager(context)
 
         viewModel.listCategories()
+        binding.swipeContainer.isRefreshing = true
+
         viewModel.categoryList.observe(viewLifecycleOwner) { response ->
             if (response.isSuccessful) {
                 response.body()?.let { categoryAdapter.submitList(it) }
             } else {
                 Toast.makeText(context, "Failed!", Toast.LENGTH_LONG).show()
             }
+
+            binding.swipeContainer.isRefreshing = false
         }
 
         binding.swipeContainer.setOnRefreshListener {
             viewModel.listCategories()
-            binding.swipeContainer.isRefreshing = false
         }
 
         return binding.root

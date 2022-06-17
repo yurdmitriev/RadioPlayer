@@ -12,10 +12,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.yurdm.radioplayer.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val fragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
