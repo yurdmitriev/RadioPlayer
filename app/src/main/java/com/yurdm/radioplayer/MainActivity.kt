@@ -4,6 +4,8 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.IBinder
 import android.os.RemoteException
@@ -15,6 +17,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -97,7 +101,20 @@ class MainActivity : AppCompatActivity() {
 
         radio.observe(this) {
             if (radio.value != null) {
-                Glide.with(this).load(it?.logo).optionalFitCenter().into(binding.playerThumb)
+                Glide.with(fragment).asBitmap().load(it?.logo).into(object : CustomTarget<Bitmap>() {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ) {
+                        binding.playerThumb.setImageBitmap(resource)
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {
+
+                    }
+
+                });
+
                 binding.playerTitle.text = it?.title
                 Intent(this@MainActivity, MediaPlayerService::class.java).apply {
                     this.action = "PLAY"

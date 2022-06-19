@@ -97,12 +97,12 @@ class MediaPlayerService : Service(), OnCompletionListener,
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        stopStream()
-
         val radio = intent?.getSerializableExtra("radio") as Radio?
 
         when (intent?.action) {
             "PLAY" -> {
+                stopStream()
+
                 if (radio == null) stopSelf()
                 else current = radio
 
@@ -118,10 +118,12 @@ class MediaPlayerService : Service(), OnCompletionListener,
                     setOnPreparedListener(this@MediaPlayerService)
                     setOnCompletionListener(this@MediaPlayerService)
                     setOnBufferingUpdateListener(this@MediaPlayerService)
+                    setOnErrorListener(this@MediaPlayerService)
                     mediaSessionCallback.onPlay()
                 }
             }
             else -> {
+                stopStream()
                 stopSelf()
             }
         }
@@ -159,7 +161,7 @@ class MediaPlayerService : Service(), OnCompletionListener,
                 }
 
 //                playStream(current?.stream.toString())
-                refreshNotificationAndForegroundStatus(PlaybackStateCompat.STATE_PLAYING)
+//                refreshNotificationAndForegroundStatus(PlaybackStateCompat.STATE_PLAYING)
             }
 
             override fun onStop() {
@@ -176,7 +178,7 @@ class MediaPlayerService : Service(), OnCompletionListener,
                     )
                 }
 
-                refreshNotificationAndForegroundStatus(PlaybackStateCompat.STATE_STOPPED)
+//                refreshNotificationAndForegroundStatus(PlaybackStateCompat.STATE_STOPPED)
                 stopSelf()
             }
         }
@@ -291,13 +293,16 @@ class MediaPlayerService : Service(), OnCompletionListener,
     }
 
     override fun onCompletion(mp: MediaPlayer) {
-        //Invoked when playback of a media source has completed.
-        mediaSessionCallback.onStop()
+        mp.reset()
+        mp.prepareAsync()
     }
 
     //Handle errors
     override fun onError(mp: MediaPlayer, what: Int, extra: Int): Boolean {
         //Invoked when there has been an error during an asynchronous operation.
+        AlertDialog.Builder(this)
+            .setMessage("Error: $what").show()
+        mp.release()
         return false
     }
 

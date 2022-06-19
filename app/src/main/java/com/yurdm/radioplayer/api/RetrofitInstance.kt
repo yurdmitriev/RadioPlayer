@@ -1,6 +1,5 @@
 package com.yurdm.radioplayer.api
 
-import android.content.Context
 import com.yurdm.radioplayer.util.Constants.Companion.BASE_URL
 import com.yurdm.radioplayer.util.Interceptor
 import okhttp3.OkHttpClient
