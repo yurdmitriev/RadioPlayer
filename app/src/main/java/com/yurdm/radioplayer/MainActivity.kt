@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.yurdm.radioplayer.api.RetrofitInstance
 import com.yurdm.radioplayer.databinding.ActivityMainBinding
 import com.yurdm.radioplayer.model.Radio
 
@@ -72,12 +73,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        val fragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
-        binding.bottomNav.setupWithNavController(fragment.navController)
-
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.server_client_id))
             .requestServerAuthCode(getString(R.string.server_client_id))
@@ -89,7 +84,14 @@ class MainActivity : AppCompatActivity() {
         if (account != null) {
             token = this.getSharedPreferences("credentials", Context.MODE_PRIVATE)
                 .getString("token", null)
+            RetrofitInstance.token = token
         }
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val fragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
+        binding.bottomNav.setupWithNavController(fragment.navController)
 
         binding.homeRoot.transitionToState(R.id.initial)
 

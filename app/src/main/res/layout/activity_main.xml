@@ -16,15 +16,17 @@
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:navGraph="@navigation/app_nav" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/player_container"
         android:layout_width="0dp"
         android:layout_height="80sp"
-        android:background="#e5e5e5"
+        android:background="@drawable/miniplayer_layout"
         app:layout_constraintBottom_toTopOf="@+id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -35,6 +37,8 @@
         android:id="@+id/playerThumb"
         android:layout_width="150dp"
         android:layout_height="0dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/player_container"
         app:layout_constraintStart_toStartOf="@+id/player_container"
@@ -55,14 +59,18 @@
 
     <TextView
         android:id="@+id/playerTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="Title"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/player_container"
+        app:layout_constraintEnd_toStartOf="@+id/playerStop"
         app:layout_constraintStart_toEndOf="@+id/playerThumb"
         app:layout_constraintTop_toTopOf="@id/player_container" />
 

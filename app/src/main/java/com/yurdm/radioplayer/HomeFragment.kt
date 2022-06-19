@@ -46,7 +46,9 @@ class HomeFragment : Fragment() {
 
         viewModel.categoryList.observe(viewLifecycleOwner) { response ->
             if (response.isSuccessful) {
-                response.body()?.let { categoryAdapter.submitList(it) }
+                response.body()?.let {
+                    categoryAdapter.submitList(it)
+                }
             } else {
                 Toast.makeText(context, "Failed!", Toast.LENGTH_LONG).show()
             }

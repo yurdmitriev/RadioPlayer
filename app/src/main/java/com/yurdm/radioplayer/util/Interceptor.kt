@@ -9,6 +9,7 @@ class Interceptor(private val bearer: String?): Interceptor {
             .newBuilder()
             .addHeader("Accept", "application/json")
             .addHeader("Authorization", "Bearer $bearer")
+            .addHeader("Referrer", Constants.BASE_URL)
             .build()
 
         return chain.proceed(request)

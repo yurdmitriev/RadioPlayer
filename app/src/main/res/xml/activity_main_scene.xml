@@ -41,16 +41,6 @@
 
     <ConstraintSet android:id="@+id/mini">
         <Constraint
-            android:id="@+id/fragment"
-            motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            motion:layout_constraintVertical_bias="0.0"
-            motion:layout_constraintHorizontal_bias="0.0"
-            motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintBottom_toTopOf="@+id/player_container" />
-        <Constraint
             android:id="@+id/player_container"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"

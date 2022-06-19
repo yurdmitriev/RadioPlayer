@@ -1,10 +1,8 @@
 package com.yurdm.radioplayer
 
 import android.app.*
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.AudioManager.OnAudioFocusChangeListener
@@ -38,8 +36,7 @@ class MediaPlayerService : Service(), OnCompletionListener,
 
     val stateBuilder = PlaybackStateCompat.Builder()
         .setActions(
-            PlaybackStateCompat.ACTION_PLAY
-                    or PlaybackStateCompat.ACTION_STOP
+            PlaybackStateCompat.ACTION_PLAY or PlaybackStateCompat.ACTION_STOP
 //                    or PlaybackStateCompat.ACTION_PAUSE
 //                    or PlaybackStateCompat.ACTION_PLAY_PAUSE
 //                    or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
@@ -120,6 +117,7 @@ class MediaPlayerService : Service(), OnCompletionListener,
                     prepareAsync()
                     setOnPreparedListener(this@MediaPlayerService)
                     setOnCompletionListener(this@MediaPlayerService)
+                    setOnBufferingUpdateListener(this@MediaPlayerService)
                     mediaSessionCallback.onPlay()
                 }
             }
@@ -214,15 +212,11 @@ class MediaPlayerService : Service(), OnCompletionListener,
                 startForeground(NOTIFICATION_ID, getNotification(playbackState))
             }
             PlaybackStateCompat.STATE_PAUSED -> {
-
-                // На паузе мы перестаем быть foreground, однако оставляем уведомление,
-                // чтобы пользователь мог play нажать
                 NotificationManagerCompat.from(this)
                     .notify(NOTIFICATION_ID, getNotification(playbackState))
                 stopForeground(false)
             }
             else -> {
-                // Все, можно прятать уведомление
                 stopForeground(true)
             }
         }
@@ -290,6 +284,7 @@ class MediaPlayerService : Service(), OnCompletionListener,
             cancelSignal = false
         } else {
             // TODO: Show progress
+            println(percent)
         }
         //Invoked indicating buffering status of
         //a media resource being streamed over the network.
