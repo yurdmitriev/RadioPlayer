@@ -1,5 +1,6 @@
 package com.yurdm.radioplayer
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +26,9 @@ class HomeFragment : Fragment() {
         val factory = HomeViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
 
-        categoryAdapter = CategoryRecyclerAdapter(layoutInflater)
+        categoryAdapter = CategoryRecyclerAdapter(layoutInflater) {
+            MainActivity.radio.value = it
+        }
     }
 
     override fun onCreateView(
