@@ -19,13 +19,13 @@ class ProfileViewModel(val repository: Repository) : ViewModel() {
         }
     }
 
-    fun getUserInfo() {
+    fun getUserInfo(token: String) {
         viewModelScope.launch {
-            val token = MainActivity.token
-            if (!token.isNullOrEmpty()) {
-                val response = repository.getUserInfo(token)
-                res.value = response
-            }
+            val response = repository.getUserInfo(token)
+            res.value = response
+//            val token = MainActivity.token
+//            if (!token.isNullOrEmpty()) {
+//            }
         }
     }
 }
