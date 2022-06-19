@@ -45,8 +45,6 @@ class SearchFragment : Fragment() {
             }
         }
 
-//        binding.searchBox.addTextChangedListener { }
-
         binding.searchBox.addTextChangedListener(
             object : TextWatcher {
                 override fun beforeTextChanged(
@@ -59,7 +57,6 @@ class SearchFragment : Fragment() {
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     s?.toString()?.let { q -> viewModel.search(q) }
-                    println(s?.toString())
                 }
 
                 override fun afterTextChanged(s: Editable?) {
