@@ -31,6 +31,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"
                 android:hint="@string/search_box_hint"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textColorHint="@color/grey_front"
                 tools:ignore="TextContrastCheck" />
 
@@ -38,9 +41,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/searchResults"
-            android:layout_width="409dp"
-            android:layout_height="663dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

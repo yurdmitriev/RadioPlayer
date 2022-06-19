@@ -23,4 +23,10 @@ interface RadioPlayerApi {
 
     @GET("api/user")
     suspend fun getUserInfo(): Response<Profile>
+
+    @GET("api/user/favourites")
+    suspend fun getFavourites(): Response<List<Radio>>
+
+    @GET("api/radio/search")
+    suspend fun search(@Query("q") query: String): Response<List<Radio>>
 }

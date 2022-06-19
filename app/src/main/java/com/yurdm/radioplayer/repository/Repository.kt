@@ -26,4 +26,13 @@ class Repository {
         RetrofitInstance.token = token
         return RetrofitInstance.api.getUserInfo()
     }
+
+    suspend fun getFavourites(token: String): Response<List<Radio>> {
+        RetrofitInstance.token = token
+        return RetrofitInstance.api.getFavourites()
+    }
+
+    suspend fun search(query: String): Response<List<Radio>> {
+        return RetrofitInstance.api.search(query)
+    }
 }

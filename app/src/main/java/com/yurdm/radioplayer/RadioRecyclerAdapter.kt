@@ -13,11 +13,12 @@ import com.yurdm.radioplayer.model.Radio
 
 class RadioRecyclerAdapter(
     private val inflater: LayoutInflater,
+    private val layoutId: Int = R.layout.radio_grid_item_layout,
     private val onClick: (Radio) -> Unit
 ) : ListAdapter<Radio, RadioRecyclerAdapter.ViewHolder>(RadioDiffCallback) {
     class ViewHolder(view: View, onClick: (Radio) -> Unit) : RecyclerView.ViewHolder(view) {
-        private val title = view.findViewById<TextView>(R.id.card_title)
-        private val logo = view.findViewById<ImageView>(R.id.card_logo)
+        private val title = view.findViewById<TextView>(R.id.item_title)
+        private val logo = view.findViewById<ImageView>(R.id.item_logo)
         private var radio: Radio? = null
 
         init {
@@ -36,7 +37,7 @@ class RadioRecyclerAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = inflater.inflate(R.layout.radio_grid_item_layout, parent, false)
+        val view = inflater.inflate(layoutId, parent, false)
 
         return ViewHolder(view, onClick);
     }
