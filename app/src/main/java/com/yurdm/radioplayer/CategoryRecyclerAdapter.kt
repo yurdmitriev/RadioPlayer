@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.yurdm.radioplayer.model.Category
+import com.yurdm.radioplayer.model.Radio
 
 class CategoryRecyclerAdapter(
-    private val inflater: LayoutInflater
+    private val inflater: LayoutInflater,
+    private val itemClick: (Radio) -> Unit
 ) : ListAdapter<Category, CategoryRecyclerAdapter.ViewHolder>(CategoryDiffCallback) {
-    class ViewHolder(view: View, inflater: LayoutInflater) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, inflater: LayoutInflater, onClick: (Radio) -> Unit) : RecyclerView.ViewHolder(view) {
         private val title = view.findViewById<TextView>(R.id.categoryTitle)
         private val list = view.findViewById<RecyclerView>(R.id.radioList)
         private var category: Category? = null
@@ -21,7 +23,7 @@ class CategoryRecyclerAdapter(
         private var layoutManager: LinearLayoutManager
 
         init {
-            adapter = RadioRecyclerAdapter(inflater) {}
+            adapter = RadioRecyclerAdapter(inflater, onClick = onClick)
             layoutManager = LinearLayoutManager(inflater.context, LinearLayoutManager.HORIZONTAL, false)
         }
 
@@ -38,7 +40,7 @@ class CategoryRecyclerAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = inflater.inflate(R.layout.category_item_layout, parent, false)
 
-        return ViewHolder(view, inflater);
+        return ViewHolder(view, inflater, itemClick);
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
